@@ -43,8 +43,9 @@ func (o *OpCreateIndex) checkDeprecation(l Logger) error {
 		if shouldError {
 			return fmt.Errorf("%s", msg)
 		}
-		// Log as operation start message (Logger doesn't have Warn method)
-		// The deprecation message will appear in logs when operation starts
+		
+		// Log deprecation warning
+		l.Info(msg)
 	}
 
 	return nil
