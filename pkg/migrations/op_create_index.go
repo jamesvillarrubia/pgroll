@@ -30,17 +30,17 @@ func (o *OpCreateIndex) Start(ctx context.Context, l Logger, conn db.DB, s *sche
 		return nil, TableDoesNotExistError{Name: o.Table}
 	}
 
-	// Convert to map format for CreateIndexConcurrentlyAction
-	// Map physical column names to their settings
-	cols := make(map[string]IndexField, len(o.Columns))
+	// Build ordered columns array with physical column names
+	cols := make([]IndexColumn, 0, len(o.Columns))
 	for _, col := range o.Columns {
 		physicalName := table.PhysicalColumnNamesFor(col.Name)
-		cols[physicalName[0]] = IndexField{
+		cols = append(cols, IndexColumn{
+			Name:    physicalName[0],
 			Collate: col.Collate,
 			Nulls:   col.Nulls,
 			Opclass: col.Opclass,
 			Sort:    col.Sort,
-		}
+		})
 	}
 
 	dbActions := []DBAction{
