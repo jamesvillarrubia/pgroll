@@ -44,11 +44,11 @@ func TestCreateIndex(t *testing.T) {
 					Name:          "02_create_index",
 					VersionSchema: "create_index",
 					Operations: migrations.Operations{
-						&migrations.OpCreateIndex{
-							Name:    "idx_users_name",
-							Table:   "users",
-							Columns: map[string]migrations.IndexField{"name": {}},
-						},
+					&migrations.OpCreateIndex{
+						Name:    "idx_users_name",
+						Table:   "users",
+						Columns: []migrations.IndexColumn{{Name: "name"}},
+					},
 					},
 				},
 			},
@@ -93,7 +93,7 @@ func TestCreateIndex(t *testing.T) {
 						&migrations.OpCreateIndex{
 							Name:    "idx_USERS_name",
 							Table:   "users",
-							Columns: map[string]migrations.IndexField{"name": {}},
+							Columns: []migrations.IndexColumn{{Name: "name"}},
 						},
 					},
 				},
@@ -144,7 +144,7 @@ func TestCreateIndex(t *testing.T) {
 						&migrations.OpCreateIndex{
 							Name:      "idx_users_name_after_2019",
 							Table:     "users",
-							Columns:   map[string]migrations.IndexField{"registered_at_year": {}},
+							Columns:   []migrations.IndexColumn{{Name: "registered_at_year"}},
 							Predicate: "registered_at_year > 2019",
 						},
 					},
@@ -192,8 +192,9 @@ func TestCreateIndex(t *testing.T) {
 						&migrations.OpCreateIndex{
 							Name:  "idx_users_name",
 							Table: "users",
-							Columns: map[string]migrations.IndexField{
-								"name": {
+							Columns: []migrations.IndexColumn{
+								{
+									Name: "name",
 									Sort: migrations.IndexFieldSortDESC,
 								},
 							},
@@ -247,7 +248,7 @@ func TestCreateIndex(t *testing.T) {
 						&migrations.OpCreateIndex{
 							Name:    invalidName,
 							Table:   "users",
-							Columns: map[string]migrations.IndexField{"registered_at_year": {}},
+							Columns: []migrations.IndexColumn{{Name: "registered_at_year"}},
 						},
 					},
 				},
@@ -286,7 +287,7 @@ func TestCreateIndex(t *testing.T) {
 						&migrations.OpCreateIndex{
 							Name:              "idx_users_name_hash",
 							Table:             "users",
-							Columns:           map[string]migrations.IndexField{"name": {}},
+							Columns:           []migrations.IndexColumn{{Name: "name"}},
 							Method:            migrations.OpCreateIndexMethodHash,
 							StorageParameters: "fillfactor = 70",
 						},
@@ -347,7 +348,7 @@ func TestCreateIndexOnMultipleColumns(t *testing.T) {
 					&migrations.OpCreateIndex{
 						Name:    "idx_users_name_email",
 						Table:   "users",
-						Columns: map[string]migrations.IndexField{"name": {}, "email": {}},
+						Columns: []migrations.IndexColumn{{Name: "name"}, {Name: "email"}},
 					},
 				},
 			},
@@ -402,7 +403,7 @@ func TestCreateIndexInMultiOperationMigrations(t *testing.T) {
 						},
 						&migrations.OpCreateIndex{
 							Table:   "products",
-							Columns: map[string]migrations.IndexField{"name": {}},
+							Columns: []migrations.IndexColumn{{Name: "name"}},
 							Name:    "idx_products_name",
 						},
 					},
@@ -458,7 +459,7 @@ func TestCreateIndexInMultiOperationMigrations(t *testing.T) {
 						},
 						&migrations.OpCreateIndex{
 							Table:   "products",
-							Columns: map[string]migrations.IndexField{"item_name": {}},
+							Columns: []migrations.IndexColumn{{Name: "item_name"}},
 							Name:    "idx_products_item_name",
 						},
 					},
@@ -498,11 +499,11 @@ func TestCreateIndexInMultiOperationMigrations(t *testing.T) {
 								},
 							},
 						},
-						&migrations.OpCreateIndex{
-							Name:    "idx_users_name",
-							Table:   "users",
-							Columns: map[string]migrations.IndexField{"name": {}},
-						},
+					&migrations.OpCreateIndex{
+						Name:    "idx_users_name",
+						Table:   "users",
+						Columns: []migrations.IndexColumn{{Name: "name"}},
+					},
 					},
 				},
 			},
@@ -557,7 +558,7 @@ func TestCreateIndexInMultiOperationMigrations(t *testing.T) {
 						&migrations.OpCreateIndex{
 							Name:    "idx_users_age",
 							Table:   "users",
-							Columns: map[string]migrations.IndexField{"age": {}},
+							Columns: []migrations.IndexColumn{{Name: "age"}},
 						},
 					},
 				},
