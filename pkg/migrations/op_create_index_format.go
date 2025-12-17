@@ -35,7 +35,7 @@ func (o *OpCreateIndex) checkDeprecation(l Logger) error {
 	shouldError := false
 
 	if numColumns > 1 || isPartial {
-		msg := "Map format for 'columns' is deprecated for multi-column and partial indexes. " +
+		msg := "DEPRECATION WARNING: Map format for 'columns' is deprecated for multi-column and partial indexes. " +
 			"Use array format instead: columns: [{name: col1}, {name: col2}]. " +
 			"Map format does not preserve column order which is critical for index performance. " +
 			"Support for map format in multi-column/partial indexes will be removed on June 17, 2025."
